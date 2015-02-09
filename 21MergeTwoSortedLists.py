@@ -2,7 +2,6 @@
 
 # Definition for singly-linked list.
 class ListNode(object):
-    """docstring for ListNode"""
     def __init__(self, x):
         self.val = x
         self.next = None
@@ -11,52 +10,36 @@ class Solution():
     # @param two ListNodes
     # @return a ListNode
     def mergeTwoLists(self, l1, l2):
-        # i, j, pre, pre.next = l1, l2, l1, l1
-        i, j = l1, l2
-        while i and j:
-            print i.val, j.val
-            i, j = i.next, j.next
+        head = ListNode(0)
+        tail = head
+        while l1 is not None and l2 is not None:
+            left = l1.val < l2.val
+            tail.next = l1 if left else l2
+            tail = tail.next
+            l1 = l1.next if left else l1
+            l2 = l2 if left else l2.next
+        tail.next = l2 if l1 is None else l1
+        return head.next
 
-        # print l1.val, l1.next
-        # l1 = l1.next
-        # print l1.val, l1.next
-        # l1 = l1.next
-            # if i.val < j.val and i.next:
-            #     if i.next.val > j.val:
-            #         print '1: %d %d' %(i.val, j.val)
-            #         pre, i = i, i.next
-            #         pre.next = j
-            #         pre = j
-            #         j = j.next
-            #         pre.next = i
-            #         # return self.mergeTwoLists(i, j)
-            #     else:
-            #         print '2: %d %d' %(i.next.val, j.val)
-            #         pre, i = i, i.next
-            # elif j.val < i.val:
-            #     print '3: %d %d' %(i.val, j.val)
-            #     pre.next = j
-            #     pre = j
-            #     pre.next = i
-            #     j = j.next
-            #     # return self.mergeTwoLists(i, j)
-        return l1
+def show(link, n):
+    for x in xrange(n):
+        try:
+            print link.val
+        except:
+            print 'NoneType'
+        else:
+            link = link.next
 
+
+    pass
 
 if __name__ == '__main__':
     s = Solution()
-    l11 = ListNode(1)
-    l12 = ListNode(5)
-    l13 = ListNode(6)
+    l11 = ListNode(-9)
+    l12 = ListNode(2)
     l11.next = l12
-    l12.next = l13
-
-    
-    l2 = ListNode(3)
-    p = l2
-    p.next = ListNode(4)
-    p = p.next
-    p.next = ListNode(7)
-    p = p.next
-    p.next = None
-    s.mergeTwoLists(l11, l2)
+    l12.next = None
+    l21 = ListNode(1)
+    l22 = ListNode(5)
+    l21.next = l22
+    show(s.mergeTwoLists(l11, l21), 4)
